@@ -1,0 +1,1 @@
+src/backend/px_optimizer/libgpos/src/memory/CAutoMemoryPool.o src/backend/px_optimizer/libgpos/src/memory/CCacheFactory.o src/backend/px_optimizer/libgpos/src/memory/CMemoryPool.o src/backend/px_optimizer/libgpos/src/memory/CMemoryPoolManager.o src/backend/px_optimizer/libgpos/src/memory/CMemoryPoolTracker.o src/backend/px_optimizer/libgpos/src/memory/CMemoryVisitorPrint.o

@@ -1,0 +1,8 @@
+set client_encoding ='SQL_ASCII';COPY lineitem FROM '/data/lineitem.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE LINEITEM ADD PRIMARY KEY (L_ORDERKEY,L_LINENUMBER);
+set client_encoding ='SQL_ASCII';COPY customer FROM '/data/customer.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE CUSTOMER ADD PRIMARY KEY (C_CUSTKEY);
+set client_encoding ='SQL_ASCII';COPY region FROM '/data/region.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE REGION ADD PRIMARY KEY (R_REGIONKEY);
+set client_encoding ='SQL_ASCII';COPY nation FROM '/data/nation.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE NATION ADD PRIMARY KEY (N_NATIONKEY);
+set client_encoding ='SQL_ASCII';COPY supplier FROM '/data/supplier.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE SUPPLIER ADD PRIMARY KEY (S_SUPPKEY);
+set client_encoding ='SQL_ASCII';COPY part FROM '/data/part.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE PART ADD PRIMARY KEY (P_PARTKEY);
+set client_encoding ='SQL_ASCII';COPY partsupp FROM '/data/partsupp.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE PARTSUPP ADD PRIMARY KEY (PS_PARTKEY,PS_SUPPKEY);
+set client_encoding ='SQL_ASCII';COPY orders FROM '/data/orders.tbl' WITH (FORMAT csv, DELIMITER '|');ALTER TABLE ORDERS ADD PRIMARY KEY (O_ORDERKEY);

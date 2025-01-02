@@ -1,0 +1,9 @@
+Name: libpq
+Description: PostgreSQL libpq library
+Url: http://www.postgresql.org/
+Version: 11.9
+Requires: 
+Requires.private: 
+Cflags: -I/home/postgres/tmp_basedir_polardb_pg_1100_bld/include
+Libs: -L/home/postgres/tmp_basedir_polardb_pg_1100_bld/lib -lpq
+Libs.private: -L -L/usr/lib/llvm-12/lib -lssl -lcrypto -lgssapi_krb5 -lcrypt -lldap_r

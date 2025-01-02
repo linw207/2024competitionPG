@@ -1,0 +1,1 @@
+src/backend/px_optimizer/libgpopt/src/optimizer/COptimizer.o src/backend/px_optimizer/libgpopt/src/optimizer/COptimizerConfig.o

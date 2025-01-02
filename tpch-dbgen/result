@@ -1,0 +1,210 @@
+####################### 17.sql ###########################
+set polar_enable_px = on; SET polar_px_dop_per_node = 1; set work_mem = '16MB'; set statement_timeout='60min';
+timing
+-- using 1730183705 as a seed to the RNG
+explain select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=0.00..1293.00 rows=1 width=8)
+   ->  PX Coordinator 2:1  (slice1; segments: 2)  (cost=0.00..1293.00 rows=1 width=8)
+         ->  Hash Join  (cost=0.00..1293.00 rows=1 width=8)
+               Hash Cond: (lineitem.l_partkey = part.p_partkey)
+               Join Filter: (lineitem.l_quantity < ((0.2 * avg(lineitem_1.l_quantity))))
+               ->  PX Hash 2:2  (slice2; segments: 2)  (cost=0.00..431.00 rows=1 width=20)
+                     Hash Key: lineitem.l_partkey
+                     ->  Partial Seq Scan on lineitem  (cost=0.00..431.00 rows=1 width=20)
+               ->  Hash  (cost=862.00..862.00 rows=1 width=12)
+                     ->  Hash Left Join  (cost=0.00..862.00 rows=1 width=12)
+                           Hash Cond: (part.p_partkey = lineitem_1.l_partkey)
+                           ->  PX Hash 2:2  (slice3; segments: 2)  (cost=0.00..431.00 rows=1 width=4)
+                                 Hash Key: part.p_partkey
+                                 ->  Partial Seq Scan on part  (cost=0.00..431.00 rows=1 width=4)
+                                       Filter: ((p_brand = 'Brand#21'::bpchar) AND (p_container = 'SM CAN'::bpchar))
+                           ->  Hash  (cost=431.00..431.00 rows=1 width=12)
+                                 ->  GroupAggregate  (cost=0.00..431.00 rows=1 width=12)
+                                       Group Key: lineitem_1.l_partkey
+                                       ->  Sort  (cost=0.00..431.00 rows=1 width=12)
+                                             Sort Key: lineitem_1.l_partkey
+                                             ->  PX Hash 2:2  (slice4; segments: 2)  (cost=0.00..431.00 rows=1 width=12)
+                                                   Hash Key: lineitem_1.l_partkey
+                                                   ->  Partial Seq Scan on lineitem lineitem_1  (cost=0.00..431.00 rows=1 width=12)
+ Optimizer: PolarDB PX Optimizer
+(24 rows)
+
+Time: 44.897 ms
+--LIMIT -1
+set polar_enable_px = on; SET polar_px_dop_per_node = 1; set work_mem = '16MB'; set statement_timeout='60min';
+timing
+-- using 1730183705 as a seed to the RNG
+select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+Time: 30.010 ms
+--LIMIT -1
+####################### 17.sql ###########################
+
+timing
+-- using 1730183705 as a seed to the RNG
+explain select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=0.00..1293.00 rows=1 width=8)
+   ->  PX Coordinator 2:1  (slice1; segments: 2)  (cost=0.00..1293.00 rows=1 width=8)
+         ->  Hash Join  (cost=0.00..1293.00 rows=1 width=8)
+               Hash Cond: (lineitem.l_partkey = part.p_partkey)
+               Join Filter: (lineitem.l_quantity < ((0.2 * avg(lineitem_1.l_quantity))))
+               ->  PX Hash 2:2  (slice2; segments: 2)  (cost=0.00..431.00 rows=1 width=20)
+                     Hash Key: lineitem.l_partkey
+                     ->  Partial Seq Scan on lineitem  (cost=0.00..431.00 rows=1 width=20)
+               ->  Hash  (cost=862.00..862.00 rows=1 width=12)
+                     ->  Hash Left Join  (cost=0.00..862.00 rows=1 width=12)
+                           Hash Cond: (part.p_partkey = lineitem_1.l_partkey)
+                           ->  PX Hash 2:2  (slice3; segments: 2)  (cost=0.00..431.00 rows=1 width=4)
+                                 Hash Key: part.p_partkey
+                                 ->  Partial Seq Scan on part  (cost=0.00..431.00 rows=1 width=4)
+                                       Filter: ((p_brand = 'Brand#21'::bpchar) AND (p_container = 'SM CAN'::bpchar))
+                           ->  Hash  (cost=431.00..431.00 rows=1 width=12)
+                                 ->  GroupAggregate  (cost=0.00..431.00 rows=1 width=12)
+                                       Group Key: lineitem_1.l_partkey
+                                       ->  Sort  (cost=0.00..431.00 rows=1 width=12)
+                                             Sort Key: lineitem_1.l_partkey
+                                             ->  PX Hash 2:2  (slice4; segments: 2)  (cost=0.00..431.00 rows=1 width=12)
+                                                   Hash Key: lineitem_1.l_partkey
+                                                   ->  Partial Seq Scan on lineitem lineitem_1  (cost=0.00..431.00 rows=1 width=12)
+ Optimizer: PolarDB PX Optimizer
+(24 rows)
+
+Time: 23.229 ms
+--LIMIT -1
+
+timing
+-- using 1730183705 as a seed to the RNG
+select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+Time: 22.448 ms
+--LIMIT -1
+####################### 17.sql ###########################
+set polar_enable_px=off; set work_mem='16MB'; set statement_timeout='60min'; set min_parallel_index_scan_size=0; set min_parallel_table_scan_size=0; set max_parallel_workers_per_gather=4; set parallel_leader_participation=0; set parallel_setup_cost=0; set parallel_tuple_cost=0;
+timing
+-- using 1730183705 as a seed to the RNG
+explain select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+                                               QUERY PLAN                                                
+---------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=13255851.79..13255851.81 rows=1 width=32)
+   ->  Hash Join  (cost=25713.05..13255850.84 rows=379 width=18)
+         Hash Cond: (lineitem.l_partkey = part.p_partkey)
+         Join Filter: (lineitem.l_quantity < (SubPlan 1))
+         ->  Gather  (cost=0.00..672486.40 rows=45762560 width=40)
+               Workers Planned: 4
+               ->  Parallel Seq Scan on lineitem  (cost=0.00..672486.40 rows=11440640 width=40)
+         ->  Hash  (cost=25712.64..25712.64 rows=33 width=4)
+               ->  Gather  (cost=0.00..25712.64 rows=33 width=4)
+                     Workers Planned: 4
+                     ->  Parallel Seq Scan on part  (cost=0.00..25712.64 rows=8 width=4)
+                           Filter: ((p_brand = 'Brand#21'::bpchar) AND (p_container = 'SM CAN'::bpchar))
+         SubPlan 1
+           ->  Aggregate  (cost=1130684.03..1130684.05 rows=1 width=32)
+                 ->  Seq Scan on lineitem lineitem_1  (cost=0.00..1130112.00 rows=228813 width=18)
+                       Filter: (l_partkey = part.p_partkey)
+(16 rows)
+
+Time: 2.865 ms
+--LIMIT -1
+set polar_enable_px=off; set work_mem='16MB'; set statement_timeout='60min'; set min_parallel_index_scan_size=0; set min_parallel_table_scan_size=0; set max_parallel_workers_per_gather=4; set parallel_leader_participation=0; set parallel_setup_cost=0; set parallel_tuple_cost=0;
+timing
+-- using 1730183705 as a seed to the RNG
+select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#21'
+	and p_container = 'SM CAN'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);
+Time: 319001.978 ms (05:19.002)

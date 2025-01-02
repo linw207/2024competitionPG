@@ -1,0 +1,1 @@
+src/backend/px_optimizer_util/utils/COptTasks.o src/backend/px_optimizer_util/utils/CConstExprEvaluatorProxy.o src/backend/px_optimizer_util/utils/CMemoryPoolPalloc.o src/backend/px_optimizer_util/utils/CMemoryPoolPallocManager.o src/backend/px_optimizer_util/utils/RelationWrapper.o

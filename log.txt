@@ -1,0 +1,111 @@
+postgres@hadoop01:~/polardb_pg$ bash tpch_copy.sh 
+Starting table creation at Mon 28 Oct 2024 12:51:11 PM CST
+Executing dss.ddl to create tables at Mon 28 Oct 2024 12:51:11 PM CST
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+Setting lineitem to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting orders to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting customer to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting partsupp to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting part to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting supplier to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting nation to UNLOGGED at Mon 28 Oct 2024 12:51:11 PM CST
+ALTER TABLE
+Setting region to UNLOGGED at Mon 28 Oct 2024 12:51:12 PM CST
+ALTER TABLE
+Table creation completed in 1 seconds at Mon 28 Oct 2024 12:51:12 PM CST
+Starting data load at Mon 28 Oct 2024 12:51:12 PM CST
+Splitting lineitem.tbl into smaller chunks at Mon 28 Oct 2024 12:51:12 PM CST
+Loading orders.tbl into orders at Mon 28 Oct 2024 12:51:12 PM CST
+Loading customer.tbl into customer at Mon 28 Oct 2024 12:51:12 PM CST
+Loading partsupp.tbl into partsupp at Mon 28 Oct 2024 12:51:12 PM CST
+Loading part.tbl into part at Mon 28 Oct 2024 12:51:12 PM CST
+Loading supplier.tbl into supplier at Mon 28 Oct 2024 12:51:12 PM CST
+Loading nation.tbl into nation at Mon 28 Oct 2024 12:51:12 PM CST
+Loading region.tbl into region at Mon 28 Oct 2024 12:51:12 PM CST
+COPY 25
+COPY 5
+COPY 200000
+Loading /data/lineitem_split_aa into lineitem table at Mon 28 Oct 2024 12:52:33 PM CST
+Loading /data/lineitem_split_ab into lineitem table at Mon 28 Oct 2024 12:52:33 PM CST
+Loading /data/lineitem_split_ac into lineitem table at Mon 28 Oct 2024 12:52:33 PM CST
+Loading /data/lineitem_split_ad into lineitem table at Mon 28 Oct 2024 12:52:33 PM CST
+COPY 3000000
+COPY 4000000
+COPY 16000000
+COPY 30000000
+Data load completed in 326 seconds at Mon 28 Oct 2024 12:56:38 PM CST
+Starting key addition at Mon 28 Oct 2024 12:56:38 PM CST
+Starting Phase 1 of key addition at Mon 28 Oct 2024 12:56:38 PM CST
+Executing: ALTER TABLE region ADD PRIMARY KEY (R_REGIONKEY); at Mon 28 Oct 2024 12:56:38 PM CST
+Executing: ALTER TABLE nation ADD PRIMARY KEY (N_NATIONKEY); at Mon 28 Oct 2024 12:56:38 PM CST
+Executing: ALTER TABLE part ADD PRIMARY KEY (P_PARTKEY); at Mon 28 Oct 2024 12:56:38 PM CST
+Executing: ALTER TABLE supplier ADD PRIMARY KEY (S_SUPPKEY); at Mon 28 Oct 2024 12:56:38 PM CST
+Executing: ALTER TABLE customer ADD PRIMARY KEY (C_CUSTKEY); at Mon 28 Oct 2024 12:56:38 PM CST
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+Starting Phase 2 of key addition at Mon 28 Oct 2024 12:56:59 PM CST
+Executing: ALTER TABLE nation ADD FOREIGN KEY (N_REGIONKEY) REFERENCES region; at Mon 28 Oct 2024 12:56:59 PM CST
+Executing: ALTER TABLE supplier ADD FOREIGN KEY (S_NATIONKEY) REFERENCES nation; at Mon 28 Oct 2024 12:56:59 PM CST
+Executing: ALTER TABLE customer ADD FOREIGN KEY (C_NATIONKEY) REFERENCES nation; at Mon 28 Oct 2024 12:56:59 PM CST
+ALTER TABLE
+Executing: ALTER TABLE orders ADD PRIMARY KEY (O_ORDERKEY); at Mon 28 Oct 2024 12:56:59 PM CST
+Executing: ALTER TABLE partsupp ADD PRIMARY KEY (PS_PARTKEY, PS_SUPPKEY); at Mon 28 Oct 2024 12:56:59 PM CST
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+Starting Phase 3 of key addition at Mon 28 Oct 2024 12:59:16 PM CST
+Executing: ALTER TABLE partsupp ADD FOREIGN KEY (PS_PARTKEY) REFERENCES part; at Mon 28 Oct 2024 12:59:16 PM CST
+Executing: ALTER TABLE partsupp ADD FOREIGN KEY (PS_SUPPKEY) REFERENCES supplier; at Mon 28 Oct 2024 12:59:16 PM CST
+Executing: ALTER TABLE orders ADD FOREIGN KEY (O_CUSTKEY) REFERENCES customer; at Mon 28 Oct 2024 12:59:16 PM CST
+Executing: ALTER TABLE lineitem ADD PRIMARY KEY (L_ORDERKEY, L_LINENUMBER); at Mon 28 Oct 2024 12:59:16 PM CST
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COPY 29994608
+COPY 30000000
+COPY 30000000
+COPY 30000000
+ALTER TABLE
+Starting Phase 4 of key addition at Mon 28 Oct 2024 01:11:17 PM CST
+Executing: ALTER TABLE lineitem ADD FOREIGN KEY (L_ORDERKEY) REFERENCES orders; at Mon 28 Oct 2024 01:11:17 PM CST
+Executing: ALTER TABLE lineitem ADD FOREIGN KEY (L_PARTKEY, L_SUPPKEY) REFERENCES partsupp; at Mon 28 Oct 2024 01:11:17 PM CST
+ALTER TABLE
+ALTER TABLE
+Key addition completed in 1213 seconds at Mon 28 Oct 2024 01:16:51 PM CST
+Starting finalization at Mon 28 Oct 2024 01:16:51 PM CST
+Converting lineitem to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting orders to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting customer to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting partsupp to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting part to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting supplier to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting nation to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Converting region to logged at Mon 28 Oct 2024 01:16:51 PM CST
+UPDATE 1
+Removing temporary lineitem split files at Mon 28 Oct 2024 01:16:51 PM CST
+Finalization completed in 0 seconds at Mon 28 Oct 2024 01:16:51 PM CST
+Script completed in 1540 seconds at Mon 28 Oct 2024 01:16:51 PM CST

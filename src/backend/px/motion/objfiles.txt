@@ -1,0 +1,1 @@
+src/backend/px/motion/px_motion.o src/backend/px/motion/tupchunklist.o src/backend/px/motion/tupser.o src/backend/px/motion/ic_common.o src/backend/px/motion/ic_tcp.o src/backend/px/motion/ic_udpifc.o src/backend/px/motion/htupfifo.o src/backend/px/motion/tupleremap.o

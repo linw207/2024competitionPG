@@ -1,0 +1,1 @@
+src/backend/px_optimizer/libgpdbcost/src/CCostModelGPDB.o src/backend/px_optimizer/libgpdbcost/src/CCostModelPolarDB.o src/backend/px_optimizer/libgpdbcost/src/CCostModelParamsGPDB.o src/backend/px_optimizer/libgpdbcost/src/CCostModelParamsPolarDB.o src/backend/px_optimizer/libgpdbcost/src/ICostModel.o
